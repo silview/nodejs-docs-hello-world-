@@ -82,9 +82,7 @@ console.log(eventListeners + " 个监听器监听连接事件。");
 
 console.log("程序执行完毕。");
 
-//*******************************************************************
-// Buffer 缓冲区 
-//*******************************************************************
+
 const buf = Buffer.from('runoob','ascii');
 console.log(buf.toString());
 console.log(buf.toString('ascii'));
@@ -175,3 +173,73 @@ console.log("buf18 content : " + buf18.toString());
 // 缓冲区长度
 var buf19 = Buffer.from('www.runoob.com');
 console.log("buf19 length: " + buf19.length);
+
+
+//*******************************************************************
+// Stream 流 
+//*******************************************************************
+
+// 从流中读取数据
+var fs = require('fs');
+var data1 = '';
+
+var readerStream1 = fs.createReadStream('stream.txt');
+readerStream1.setEncoding('UTF8');
+
+readerStream1.on('data',function(chunk){
+    data1 += chunk;
+});
+
+readerStream1.on('end',function(){
+    console.log(data1);
+});
+
+readerStream1.on('error',function(err){
+    console.log(err.stack);
+});
+
+console.log("Stream 流处理完成");
+
+// 写入流
+var data2 = '写入流数据&&&&&&&&&&&&&&&&&';
+
+var writerStream2 = fs.createWriteStream('output.txt');
+
+writerStream2.write(data2,'UTF8');
+writerStream2.end();
+
+writerStream2.on('finish',function(){
+    console.log("流写入完成");
+});
+
+writerStream2.on('error',function(err){
+    console.log(err.stack);
+});
+
+console.log("写入流程序完成");
+
+// 管道流
+
+var readerStream3 = fs.createReadStream('stream.txt');
+var writerStream3 = fs.createWriteStream('stream_pipe_output.txt');
+
+readerStream3.pipe(writerStream3);
+
+console.log("管道操作完成");
+
+// 用管道和链式来压缩和解压文件
+var zlib = require('zlib');
+
+//     // 压缩文件
+// fs.createReadStream('stream.txt')
+//     .pipe(zlib.createGzip())
+//     .pipe(fs.createWriteStream('stream.txt.gz'));
+
+// console.log("stream.txt文件压缩完成");
+
+    // 解压文件
+fs.createReadStream('stream.txt.gz')
+    .pipe(zlib.createGunzip())
+    .pipe(fs.createWriteStream('stream_unzip.txt'));
+
+console.log("stream.txt.gz解压完成");
