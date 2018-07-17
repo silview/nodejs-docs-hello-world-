@@ -230,16 +230,24 @@ console.log("管道操作完成");
 // 用管道和链式来压缩和解压文件
 var zlib = require('zlib');
 
-//     // 压缩文件
-// fs.createReadStream('stream.txt')
-//     .pipe(zlib.createGzip())
-//     .pipe(fs.createWriteStream('stream.txt.gz'));
+    // 压缩文件
+fs.createReadStream('stream.txt')
+    .pipe(zlib.createGzip())
+    .pipe(fs.createWriteStream('stream.txt.gz'));
 
-// console.log("stream.txt文件压缩完成");
+console.log("stream.txt文件压缩完成");
 
-    // 解压文件
-fs.createReadStream('stream.txt.gz')
-    .pipe(zlib.createGunzip())
-    .pipe(fs.createWriteStream('stream_unzip.txt'));
+//     // 解压文件
+// fs.createReadStream('stream.txt.gz')
+//     .pipe(zlib.createGunzip())
+//     .pipe(fs.createWriteStream('stream_unzip.txt'));
 
-console.log("stream.txt.gz解压完成");
+// console.log("stream.txt.gz解压完成");
+
+//*******************************************************************
+// Node.js模块系统
+//*******************************************************************
+// var Hello = require('./hello');
+// hello = new Hello();
+// hello.setName('引用模块文件');
+// hello.sayHello();
